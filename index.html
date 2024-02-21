@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+        .number {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            display: inline-block;
+            text-align: center;
+            font-size: 25px;
+            background-color: #ffff99; /* Kauniin keltainen */
+            margin: 5px;
+            border-radius: 50%;
+            line-height: 50px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .selected {
+            background-color: #ff6666; /* Kauniin punainen */
+            color: white;
+            box-shadow: 0px 0px 15px rgba(255, 102, 102, 0.5); /* Korostettu ulkoasu */
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            color: black; /* Musta fontti */
+            background-color: #ffff99; /* Kauniin keltainen */
+            cursor: pointer;
+            box-shadow: 0px 0px 15px rgba(255, 255, 153, 0.5); /* Korostettu ulkoasu */
+        }
+        #result {
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid black;
+            width: 300px;
+            margin-left: 10px;
+            background-color: #f0f0f0;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="group1" class="group"></div>
+    <div id="group2" class="group"></div>
+    <div id="group3" class="group"></div>
+    <div id="group4" class="group"></div>
+    <button onclick="draw()">Arvo numerot</button>
+    <input id="result" readonly>
+
+    <script>
+        // Luo matriisi
+        var matrix = [];
+        for (var i = 0; i < 40; i++) {
+            var number = document.createElement("div");
+            number.className = "number";
+            number.textContent = i + 1;
+            document.getElementById("group" + (Math.floor(i / 10) + 1)).appendChild(number);
+            matrix.push(number);
+        }
+
+        // Arvonta-funktio
+        function draw() {
+            // Tyhjennä matriisi
+            for (var i = 0; i < 40; i++) {
+                matrix[i].className = "number";
+            }
+            // Arvo numerot
+            var numbers = [];
+            while (numbers.length < 7) {
+                var number = Math.floor(Math.random() * 40) + 1; // Lisätty +1
+                if (!numbers.includes(number)) {
+                    numbers.push(number);
+                    matrix[number - 1].className = "number selected"; // Muutettu number-1
+                }
+            }
+            // Näytä arvotut numerot tekstikentässä
+            document.getElementById("result").value = numbers.sort((a, b) => a - b).join(", ");
+        }
+    </script>
+</body>
+</html>
